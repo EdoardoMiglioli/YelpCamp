@@ -71,7 +71,9 @@ passport.serializeUser(User.serializeUser())
 // how to remove user from the session
 passport.deserializeUser(User.deserializeUser())
 
+// it will make the local functionalities
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
