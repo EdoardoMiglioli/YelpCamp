@@ -9,6 +9,11 @@ const CampgroundSchema = new Schema({
     price: Number,
     description: String,
     location: String,
+    // to provide specific field a owner such as review for a particular user
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     // embedding many reviews  into one campground as an array
     reviews: [
         {
