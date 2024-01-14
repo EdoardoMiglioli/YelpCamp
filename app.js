@@ -1,3 +1,19 @@
+// process.env.NODE_ENV is an environment variable that is usually just development or
+// production
+// we have been running in development this whole time, but eventualy when we deploy
+// we will be running our code in production
+
+// when we wre in development mode we require the dotenv package which is going to take the 
+// variable that is defined in .env file and add them into process dotenv in my node app
+// to do this
+// npm i dotenv
+if(process.env.NODE_ENV !== "production") {
+    require('dotenv').config()
+}
+
+console.log(process.env.SECRET)
+console.log(process.env.API_KEY)
+
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');      

@@ -3,11 +3,21 @@ const catchAsync = require('../utils/catchAsync')
 const router = express.Router({mergeParams: true});
 const {isLoggedIn, isAuthor, validateCampground} = require('../middleware')
 const campgrounds = require('../controllers/campgrounds')
+// multer adds a body object and a file or files object. 
+// the body object contains the values of the text fields of the form, the files or file object contains the files uploaded via the form
+const multer = require('multer');
+
+const { storage } = require('../cloudinary')
+const upload = multer({ storage })
+
 
 // fancy way of writing the routers when many router having the same path
 router.route('/')
     .get(catchAsync(campgrounds.index))
-    .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+    // below is the multer middleware that retrives the file data
+    .post(isLoggedIn, upload.array('image'), validateCampground, catchAsync(campgrounds.createCampground))
+    
+    
 
 // to add a new campground
 router.get('/new', isLoggedIn, campgrounds.renderNewForm)
@@ -16,7 +26,7 @@ router.route('/:id')
     // to find a campground by id
     .get(catchAsync(campgrounds.showCampground))
     // to update
-    .put(isLoggedIn, isAuthor, catchAsync(campgrounds.updateCampground))
+    .put(isLoggedIn, isAuthor, upload.array('image'), catchAsync(campgrounds.updateCampground))
     .delete(isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCampground))
 
 
@@ -25,3 +35,4 @@ router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(campgrounds.renderEditF
 
 
 module.exports = router;
+
