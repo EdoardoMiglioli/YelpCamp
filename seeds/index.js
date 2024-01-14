@@ -19,10 +19,16 @@ const seedDB = async () => {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random()*20) + 10;
         const camp = new Campground({
+          // your user id
             author: '6598f0a69120f2ca7bc525c6',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod omnis quidem aliquid maiores eaque vitae suscipit in accusantium debitis earum dignissimos nisi pariatur officia, vero et placeat necessitatibus reprehenderit. Modi?',
+            // default location is there
+            geometry: {
+              type: "Point", 
+              coordinates: [-113.1331, 47.0202]
+            },
             // below is the shorthend of price: price,
             price,
             images: [
