@@ -20,6 +20,9 @@ ImageSchema.virtual('thumbnail').get(function() {
     return this.url.replace('/upload', 'upload/w_100');
  });
 
+// this is done to include virtual schemas into main schema
+const opts = { toJSON: {virtuals: true}};
+
 const CampgroundSchema = new Schema({
     title: String,
     images: [
@@ -59,8 +62,16 @@ const CampgroundSchema = new Schema({
             // object id from a Review model
             ref: 'Review'
         }
-    ]
-});
+    ],
+}, opts);
+
+// below is done to provide properties when clicked on cluster
+CampgroundSchema.virtual('properties.popUpMarkup').get(function() {
+    return `
+    <strong><a href="/campgrounds/${this._id}">${this.title}</a></strong>
+    <p>${this.description.substring(0, 20)}...</p>
+    `;
+ });
 
 CampgroundSchema.post('findOneAndDelete', async function(doc) {
     if(doc) {
