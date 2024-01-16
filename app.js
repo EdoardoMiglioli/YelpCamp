@@ -39,10 +39,14 @@ const mongoSanitize = require('express-mongo-sanitize');
 // npm i helmet
 // it makes our site more secure
 const helmet = require('helmet'); 
+// npm i connect-mongo
+// to use mongo for our session store
+const MongoStore = require('connect-mongo')
 // mongo atlas is the cloud database
-// const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL;
+// const dbUrl = 'mongodb://127.0.0.1:27017/yelp-camp';
 
-mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
+mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -58,12 +62,27 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    // update automatically after 24*60*60 sec
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret!'
+    }
+});
+
+store.on("error", function(e) {
+    console.log("Store error", e)
+})
+
 // The app.use(session(sessionConfig)) line in your code is used to apply the session middleware to your Express.js application. This middleware handles session data, which includes user authentication status and user-specific settings. Here's what each property in the sessionConfig object means:
 // secret: This is a string used to sign the session ID cookie. This is important for security because it prevents tampering with the session ID 6.
 // resave: This option forces the session to be saved back to the session store, even if the session was never modified during the request. It's generally safe to set this to false 6.
 // saveUninitialized: This option forces a session that is "uninitialized" to be saved to the store. An uninitialized session is one that is new but not modified. It's generally safe to set this to false 6.
 // cookie: This is an object that defines properties for the session ID cookie. The expires and maxAge properties define the lifetime of the cookie, expressed in milliseconds. In your case, the cookie will expire after 7 days 6.
 const sessionConfig = {
+    store,
     // chaging the name of session
     name: 'Blah',
     secret: 'thisshouldbeabettersecret',
