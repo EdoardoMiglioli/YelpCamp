@@ -16,12 +16,12 @@
                 <!-- the grid system is divided into 12 columns, and classes like col-md-4 are used to define how many columns an element should span on a particular screen size. -->
                 <div class="col-md-4">
                     <!-- show the image if any image is there-->
-                    <% if(campground.images.length) { %>
+                    <% if (campground.images.length) { %>
                         <!-- img-fluid class makes an image responsive by automatically applying max-width: 100%; and height: auto; -->
-                        <img class="img-fluid" alt="" src="<%=campground.images[0].url%>">
-                    <% } else {%>
+                        <img crossorigin="anonymous" class="img-fluid" alt="" src="<%= campground.images[0].url %>">
+                    <% } else { %>
                         <!-- a default img src is given when no image is applied while adding campground -->
-                        <img class="img-fluid" src="https://res.cloudinary.com/dwoqqbfk6/image/upload/v1705224071/YelpCamp/ggaaqxefimocwfjp7zxg.jpg" alt="">
+                        <img crossorigin="anonymous" class="img-fluid" alt="" src="https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/YelpCamp/lz8jjv2gyynjil7lswf4.png">
                     <% } %>
                 </div>
                 <div class="col-md-8">

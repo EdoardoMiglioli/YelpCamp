@@ -17,7 +17,7 @@ const ImageSchema = new Schema(
 // below is not working propoerly
 // below is connected to models/campgrounds where img.thumnail
 ImageSchema.virtual('thumbnail').get(function() {
-    return this.url.replace('/upload', 'upload/w_100');
+    return this.url.replace('/upload', '/upload/w_200');
  });
 
 // this is done to include virtual schemas into main schema
@@ -30,10 +30,7 @@ const CampgroundSchema = new Schema({
         // url of cloud media and filname in which media is stored
         // cloudinary will store the media
         // mongoDB stores the url and filename of the media
-        {
-            url: String,
-            filename: String
-        }
+        ImageSchema
         
     ],
     geometry: {
