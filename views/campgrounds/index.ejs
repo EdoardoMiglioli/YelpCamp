@@ -2,7 +2,7 @@
 <!-- passes all below stuffs as a body into boilerplate.ejs file seperately-->
 
 <!-- injecting cluster map through cluster mapbox -->
-<div id="map" style="width: 100%; height: 500px;"></div>
+<div id="cluster-map"></div>
 
 <h1>All Campgrounds</h1>
 <div>
@@ -10,7 +10,7 @@
 </div>
     <% for(let campground of campgrounds) {%>
         <!-- In Bootstrap, a "card" is a flexible and extensible container that can be used to display various types of content, such as text, images, links, and more -->
-        <div class="card" mb-3>
+        <div class="card mb-3" >
             <!-- the row class is used to create a horizontal grouping or container for a set of columns within the Bootstrap grid system -->
             <div class="row">
                 <!-- the grid system is divided into 12 columns, and classes like col-md-4 are used to define how many columns an element should span on a particular screen size. -->
